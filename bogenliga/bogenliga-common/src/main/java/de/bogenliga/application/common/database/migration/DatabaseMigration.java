@@ -55,7 +55,7 @@ public class DatabaseMigration {
     public void startDBMigration(){
         LOG.info("Starting Database Migration: ");
         try {
-            //Set Logger for Output while Migation is running.
+            //Set Logger for Output while Migration is running.
             LogFactory.setLogCreator(new DBMigrationLogger());
 
             LOG.info("Setting following locations/SqlScript-Folders: {}", Arrays.toString(locations));

@@ -332,8 +332,8 @@ public class QueryBuilder {
      * @return
      */
     public static String applyFunction(String fieldName, String functionName) {
-        Preconditions.checkArgument(functionName != null, "Function name must not be emtpy!");
-        Preconditions.checkArgument(functionName.length() > 0, "Function name must not be emtpy!");
+        Preconditions.checkArgument(functionName != null, "Function name must not be empty!");
+        Preconditions.checkArgument(functionName.length() > 0, "Function name must not be empty!");
 
         return String.format(SQL_FUNCTION_TEMPLATE, functionName.trim(), fieldName.trim());
     }

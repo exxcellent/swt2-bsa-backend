@@ -83,7 +83,7 @@ public class BasicDAO implements DataAccessObject {
     /**
      * I set the creation parameter for the user and the timestamp.
      *
-     * @param businessEntity with common technical paramater
+     * @param businessEntity with common technical parameter
      * @param currentUserId  current user
      *
      * @see CommonBusinessEntity
@@ -98,7 +98,7 @@ public class BasicDAO implements DataAccessObject {
     /**
      * I set the modification parameter for the user and the timestamp.
      *
-     * @param businessEntity with common technical paramater
+     * @param businessEntity with common technical parameter
      * @param currentUserId  current user
      *
      * @see CommonBusinessEntity
