@@ -40,7 +40,6 @@ public class WettkampfComponentImplTest {
     private static final long wettkampf_Disziplin_Id = 3;
     private static final long wettkampf_Wettkampftyp_Id = 1;
     private static final long wettkampf_kampfrichter_Id = 6;
-    private static final long wettkampf_Ausrichter = 8;
 
     private static final long mannschaft_id = 77;
 
@@ -72,7 +71,6 @@ public class WettkampfComponentImplTest {
         expectedBE.setWettkampfTag(wettkampf_Tag);
         expectedBE.setWettkampfDisziplinId(wettkampf_Disziplin_Id);
         expectedBE.setWettkampfTypId(wettkampf_Wettkampftyp_Id);
-        expectedBE.setKampfrichterId(wettkampf_kampfrichter_Id);
         expectedBE.setWettkampfAusrichter(wettkampf_Ausrichter);
 
         return expectedBE;
@@ -94,7 +92,6 @@ public class WettkampfComponentImplTest {
                 created_At_Utc,
                 user_Id,
                 version,
-                wettkampf_kampfrichter_Id,
                 wettkampf_Ausrichter
         );
      }
@@ -143,8 +140,6 @@ public class WettkampfComponentImplTest {
                 .isEqualTo(expectedBE.getWettkampfDisziplinId());
         assertThat(actual.get(0).getWettkampfTypId())
                 .isEqualTo(expectedBE.getWettkampfTypId());
-        assertThat(actual.get(0).getKampfrichterID())
-                .isEqualTo(expectedBE.getKampfrichterId());
         assertThat(actual.get(0).getWettkampfAusrichter())
                 .isEqualTo(expectedBE.getWettkampfAusrichter());
 
