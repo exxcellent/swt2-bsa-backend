@@ -223,8 +223,9 @@ public class WettkampfDAO implements DataAccessObject {
      * @param veranstaltungsId
      * @param currentUserId
      */
-    public void createWettkampftag0(final long veranstaltungsId, final long currentUserId){
+    public WettkampfBE createWettkampftag0(final long veranstaltungsId, final long currentUserId){
         WettkampfBE defaultWettkampfBE = new WettkampfBE();
+        basicDao.setCreationAttributes(defaultWettkampfBE, currentUserId);
         defaultWettkampfBE.setVeranstaltungsId(veranstaltungsId);
         defaultWettkampfBE.setWettkampfTag(0L);
         defaultWettkampfBE.setDatum(DEFAULT_DATUM);
@@ -236,8 +237,9 @@ public class WettkampfDAO implements DataAccessObject {
         defaultWettkampfBE.setWettkampfDisziplinId(DEFAULT_DISZIPLIN_ID);
         defaultWettkampfBE.setWettkampfTypId(DEFAULT_TYP_ID);
         defaultWettkampfBE.setKampfrichterId(DEFAULT_KAMPFRICHTER_ID);
-        defaultWettkampfBE.setWettkampfAusrichter(DEFAULT_WETTKAMPF_VERANSTALTER);
-        this.create(defaultWettkampfBE, currentUserId);
+        defaultWettkampfBE.setWettkampfAusrichter(currentUserId);
+
+        return basicDao.insertEntity(WETTKAMPF, defaultWettkampfBE);
     }
 
     /**
