@@ -257,4 +257,25 @@ public class DsbMannschaftComponentImpl implements DsbMannschaftComponent, DsbMa
         }
         return mannschaftDO;
     }
+
+
+    @Override
+    public void copyMannschaftOnVeranstaltung(long lastVeranstaltungsId, long currentVeranstaltungsId,
+                                              long userId) {
+        List<DsbMannschaftDO> lastVeranstaltungList = findAllByVeranstaltungsId(lastVeranstaltungsId);
+        List<DsbMannschaftDO> currentVeranstaltungList = findAllByVeranstaltungsId(currentVeranstaltungsId);
+
+        for(DsbMannschaftDO m : lastVeranstaltungList) {
+            boolean included = false;
+            for(DsbMannschaftDO c : currentVeranstaltungList){
+                if(m.getVereinId().equals(c.getVereinId())){
+                    included = true;
+                }
+            }
+            if(!included){
+                m.setVeranstaltungId(currentVeranstaltungsId);
+                create(m, userId);
+            }
+        }
+    }
 }

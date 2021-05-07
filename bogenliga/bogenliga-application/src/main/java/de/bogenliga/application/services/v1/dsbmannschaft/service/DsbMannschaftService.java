@@ -262,13 +262,16 @@ public class DsbMannschaftService implements ServiceFacade {
     @RequestMapping(value = "byLastVeranstaltungsID/{lastVeranstaltungsId}/{currentVeranstaltungsId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @RequiresOnePermissions(perm = {UserPermission.CAN_CREATE_MANNSCHAFT,UserPermission.CAN_MODIFY_MY_VEREIN})
     public void copyMannschaftOnVeranstaltung(@PathVariable("lastVeranstaltungsId") final long lastVeranstaltungsId,
-                                              @PathVariable("currentVeranstaltungsId") final long currentVeranstaltungsId) {
+                                              @PathVariable("currentVeranstaltungsId") final long currentVeranstaltungsId,
+                                              final Principal principal) {
         if(hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
             Preconditions.checkArgument(lastVeranstaltungsId >= 0, PRECONDITION_MSG_ID_NEGATIVE);
-
+            final Long userId = UserProvider.getCurrentUserId(principal);
             LOG.debug("Receive 'copyMannschaftOnVeranstaltung' request with ID '{}'", lastVeranstaltungsId);
             LOG.debug("Receive 'copyMannschaftOnVeranstaltung' request with ID '{}'", currentVeranstaltungsId);
+            dsbMannschaftComponent.copyMannschaftOnVeranstaltung(lastVeranstaltungsId, currentVeranstaltungsId, userId);
         }
+
 
     }
 
