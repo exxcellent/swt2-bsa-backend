@@ -67,6 +67,7 @@ public class MatchBegegnungDO extends CommonDataObject {
     }
 
 
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
