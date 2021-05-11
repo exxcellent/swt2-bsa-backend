@@ -2,8 +2,9 @@ package de.bogenliga.application.business.sportjahr.api.types;
 
 import de.bogenliga.application.common.component.types.CommonDataObject;
 import de.bogenliga.application.common.component.types.DataObject;
+import java.util.List;
 /**
- * Erstellt ein SportjahrDO Objekt.
+ * TODO [AL] class documentation
  *
  * @author Philipp Schmidt,
  */
@@ -14,7 +15,7 @@ public class SportjahrDO extends CommonDataObject implements DataObject {
 
 
 
-    public SportjahrDO(long sportjahrId, long sportjahrJahr){
+    public SportjahrDO(){
         //empty
     }
 
@@ -45,6 +46,7 @@ public class SportjahrDO extends CommonDataObject implements DataObject {
     public Long getVersion() {
         return version;
     }
+
     @Override
     public void setVersion(Long version) {
         this.version = version;
