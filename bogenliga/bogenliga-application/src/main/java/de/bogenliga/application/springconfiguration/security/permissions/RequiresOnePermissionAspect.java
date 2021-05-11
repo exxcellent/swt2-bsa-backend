@@ -30,6 +30,8 @@ import de.bogenliga.application.springconfiguration.security.types.UserPermissio
 @Component
 public class RequiresOnePermissionAspect {
 
+    private static final Logger LOG = LoggerFactory.getLogger(RequiresOnePermissionAspect.class);
+
     private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
