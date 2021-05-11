@@ -331,29 +331,6 @@ public class DsbMannschaftService implements ServiceFacade {
         dsbMannschaftComponent.delete(dsbMannschaftDO, userId);
     }
 
-
-    /**
-     * I return the dsbMannschaft entries of the database with the given Veranstaltungs-Id.
-     *
-     * @param id the given Veranstaltungs-Id
-     * @return list of {@link DsbMannschaftDTO} as JSON
-     */
-    @RequestMapping(value = "byLastVeranstaltungsID/{lastVeranstaltungsId}/{currentVeranstaltungsId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequiresOnePermissions(perm = {UserPermission.CAN_CREATE_MANNSCHAFT,UserPermission.CAN_MODIFY_MY_VEREIN})
-    public void copyMannschaftOnVeranstaltung(@PathVariable("lastVeranstaltungsId") final long lastVeranstaltungsId,
-                                              @PathVariable("currentVeranstaltungsId") final long currentVeranstaltungsId,
-                                              final Principal principal) {
-        if(this.requiresOnePermissionAspect.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
-            Preconditions.checkArgument(lastVeranstaltungsId >= 0, PRECONDITION_MSG_ID_NEGATIVE);
-
-            final Long userId = UserProvider.getCurrentUserId(principal);
-            LOG.debug("Receive 'copyMannschaftOnVeranstaltung' request with ID '{}'", lastVeranstaltungsId);
-            LOG.debug("Receive 'copyMannschaftOnVeranstaltung' request with ID '{}'", currentVeranstaltungsId);
-            dsbMannschaftComponent.copyMannschaftOnVeranstaltung(lastVeranstaltungsId, currentVeranstaltungsId, userId);
-        }
-    }
-
-
     private void checkPreconditions(@RequestBody final DsbMannschaftDTO dsbMannschaftDTO) {
         Preconditions.checkNotNull(dsbMannschaftDTO, PRECONDITION_MSG_DSBMANNSCHAFT);
         Preconditions.checkNotNull(dsbMannschaftDTO.getVereinId(), PRECONDITION_MSG_DSBMANNSCHAFT_VEREIN_ID);
