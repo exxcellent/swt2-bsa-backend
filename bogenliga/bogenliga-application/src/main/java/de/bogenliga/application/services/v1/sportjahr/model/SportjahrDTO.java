@@ -1,6 +1,7 @@
 package de.bogenliga.application.services.v1.sportjahr;
 
 import de.bogenliga.application.common.service.types.DataTransferObject;
+import java.util.List;
 /**
  * TODO [AL] class documentation
  *
