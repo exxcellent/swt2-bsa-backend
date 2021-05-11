@@ -3,6 +3,7 @@ package de.bogenliga.application.business.ligatabelle.impl.business;
 import de.bogenliga.application.business.ligatabelle.api.types.LigatabelleDO;
 import de.bogenliga.application.business.ligatabelle.impl.dao.LigatabelleDAO;
 import de.bogenliga.application.business.ligatabelle.impl.entity.LigatabelleBE;
+import de.bogenliga.application.business.user.impl.entity.UserBE;
 import de.bogenliga.application.common.errorhandling.exception.BusinessException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Null;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -89,10 +92,10 @@ public class LigatabelleComponentImplTest {
         expectedLigatabelleDO.setvereinId(vereinId);
         expectedLigatabelleDO.setvereinName(vereinName);
         expectedLigatabelleDO.setmatchpkt(matchpkt);
-        expectedLigatabelleDO.setmatchpktGegen(matchpkt_gegen);
+        expectedLigatabelleDO.setmatchpkt_gegen(matchpkt_gegen);
         expectedLigatabelleDO.setsatzpkt(satzpkt);
-        expectedLigatabelleDO.setsatzpktGegen(satzpkt_gegen);
-        expectedLigatabelleDO.setsatzpktDifferenz(satzpkt_differenz);
+        expectedLigatabelleDO.setsatzpkt_gegen(satzpkt_gegen);
+        expectedLigatabelleDO.setsatzpkt_differenz(satzpkt_differenz);
         expectedLigatabelleDO.setsortierung(sortierung);
         expectedLigatabelleDO.settabellenplatz(tabellenplatz);
 
@@ -133,10 +136,10 @@ public class LigatabelleComponentImplTest {
         assertThat(actual.get(0).getvereinId()).isEqualTo(expectedLigatabelleBE.getVereinId());
         assertThat(actual.get(0).getvereinName()).isEqualTo(expectedLigatabelleBE.getVereinName());
         assertThat(actual.get(0).getmatchpkt()).isEqualTo(expectedLigatabelleBE.getMatchpkt());
-        assertThat(actual.get(0).getmatchpktGegen()).isEqualTo(expectedLigatabelleBE.getMatchpkt_gegen());
+        assertThat(actual.get(0).getmatchpkt_gegen()).isEqualTo(expectedLigatabelleBE.getMatchpkt_gegen());
         assertThat(actual.get(0).getsatzpkt()).isEqualTo(expectedLigatabelleBE.getSatzpkt());
-        assertThat(actual.get(0).getsatzpktGegen()).isEqualTo(expectedLigatabelleBE.getSatzpkt_gegen());
-        assertThat(actual.get(0).getsatzpktDifferenz()).isEqualTo(expectedLigatabelleBE.getSatzpkt_differenz());
+        assertThat(actual.get(0).getsatzpkt_gegen()).isEqualTo(expectedLigatabelleBE.getSatzpkt_gegen());
+        assertThat(actual.get(0).getsatzpkt_differenz()).isEqualTo(expectedLigatabelleBE.getSatzpkt_differenz());
         assertThat(actual.get(0).getsortierung()).isEqualTo(expectedLigatabelleBE.getSortierung());
         assertThat(actual.get(0).gettabellenplatz()).isEqualTo(expectedLigatabelleBE.getTabellenplatz());
 
@@ -197,10 +200,10 @@ public class LigatabelleComponentImplTest {
         assertThat(actual.get(0).getvereinId()).isEqualTo(expectedLigatabelleBE.getVereinId());
         assertThat(actual.get(0).getvereinName()).isEqualTo(expectedLigatabelleBE.getVereinName());
         assertThat(actual.get(0).getmatchpkt()).isEqualTo(expectedLigatabelleBE.getMatchpkt());
-        assertThat(actual.get(0).getmatchpktGegen()).isEqualTo(expectedLigatabelleBE.getMatchpkt_gegen());
+        assertThat(actual.get(0).getmatchpkt_gegen()).isEqualTo(expectedLigatabelleBE.getMatchpkt_gegen());
         assertThat(actual.get(0).getsatzpkt()).isEqualTo(expectedLigatabelleBE.getSatzpkt());
-        assertThat(actual.get(0).getsatzpktGegen()).isEqualTo(expectedLigatabelleBE.getSatzpkt_gegen());
-        assertThat(actual.get(0).getsatzpktDifferenz()).isEqualTo(expectedLigatabelleBE.getSatzpkt_differenz());
+        assertThat(actual.get(0).getsatzpkt_gegen()).isEqualTo(expectedLigatabelleBE.getSatzpkt_gegen());
+        assertThat(actual.get(0).getsatzpkt_differenz()).isEqualTo(expectedLigatabelleBE.getSatzpkt_differenz());
         assertThat(actual.get(0).getsortierung()).isEqualTo(expectedLigatabelleBE.getSortierung());
         assertThat(actual.get(0).gettabellenplatz()).isEqualTo(expectedLigatabelleBE.getTabellenplatz());
 
