@@ -57,23 +57,14 @@ public class RequiresOnePermissionAspect {
      */
     @Around("@annotation(de.bogenliga.application.springconfiguration.security.permissions.RequiresOnePermissions)")
     public Object checkPermission(final ProceedingJoinPoint joinPoint) throws Throwable {
-        final ServletRequestAttributes servletRequestAttributes;
-        final HttpServletRequest request;
-        final String jwt;
-        final String username;
-        Method currentMethod;
         try {
             //Getting the Variables from the Request that was made
             final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            if (requestAttributes == null) {
-                throw new NullPointerException();
-            } else {
-                servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
-                request = servletRequestAttributes.getRequest();
-                jwt = JwtTokenProvider.resolveToken(request);
-                username = jwtTokenProvider.getUsername(jwt);
-                currentMethod = getCurrentMethod(joinPoint);
-            }
+            final ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+            final HttpServletRequest request = servletRequestAttributes.getRequest();
+            final String jwt = JwtTokenProvider.resolveToken(request);
+            final String username = jwtTokenProvider.getUsername(jwt);
+            Method currentMethod = getCurrentMethod(joinPoint);
 
             if (currentMethod.isAnnotationPresent(RequiresOnePermissions.class)) {
                 RequiresOnePermissions annotation = currentMethod.getAnnotation(RequiresOnePermissions.class);
@@ -91,10 +82,10 @@ public class RequiresOnePermissionAspect {
                             String.format("User '%s' has not one of the  required permissions a", username));
                 }
             }
-
-            return joinPoint.proceed();
         } catch (Exception NullPointerException) {
-            return null;
+            // TODO: Handle Exception, MW
+        } finally {
+            return joinPoint.proceed();
         }
     };
     boolean hasPermission(UserPermission toTest){
