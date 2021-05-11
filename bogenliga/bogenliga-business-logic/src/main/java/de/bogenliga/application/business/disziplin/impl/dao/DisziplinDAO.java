@@ -80,13 +80,12 @@ public class DisziplinDAO implements DataAccessObject {
             .orderBy(DISZIPLIN_TABLE_ID)
             .compose().toString();
 
-    /*private static final String FIND_BY_PK = new QueryBuilder()
+    private static final String FIND_BY_PK = new QueryBuilder()
             .selectAll()
             .from(TABLE)
             .whereEquals(DISZIPLIN_TABLE_ID)
             .orderBy(DISZIPLIN_TABLE_ID)
             .compose().toString();
-     */
 
     /**
      * Return a specific disziplin.
