@@ -2,7 +2,7 @@ package de.bogenliga.application.services.v1.sportjahr;
 
 import de.bogenliga.application.common.service.types.DataTransferObject;
 /**
- * Erstellt ein SportjahrDTO Objekt.
+ * TODO [AL] class documentation
  *
  * @author Philipp Schmidt
  */
