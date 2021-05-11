@@ -36,7 +36,6 @@ public class DownloadServiceTest {
 
     }
 
-
     @Test
     public void downloadSetzlistePdf() {
 
@@ -54,10 +53,5 @@ public class DownloadServiceTest {
         //verify invocations
         verify(setzlisteComponent).getPDFasByteArray(WETTKAMPF_ID);
 
-    }
-
-    @Test
-    public void testDownloadLizenz() {
-        //TODO: Testabdeckung
     }
 }
