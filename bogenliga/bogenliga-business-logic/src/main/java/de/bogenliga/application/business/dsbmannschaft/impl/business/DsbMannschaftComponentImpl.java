@@ -252,7 +252,7 @@ public class DsbMannschaftComponentImpl implements DsbMannschaftComponent, DsbMa
         }
         return mannschaftDO;
     }
-    
+
     @Override
     public void copyMannschaftFromVeranstaltung(long lastVeranstaltungsId, long currentVeranstaltungsId,
                                               long userId) {
