@@ -267,7 +267,7 @@ public class VeranstaltungDO extends CommonDataObject implements DataObject {
     }
 
 
-    public void setVeranstaltungLigaleiterEmail(String veranstaltungLigaleiterEmail) {
+    public void setVeranstaltungLigaleiterEmail(String veranstaltungligaLeiterEmail) {
         this.veranstaltungLigaleiterEmail = veranstaltungLigaleiterEmail;
     }
 
