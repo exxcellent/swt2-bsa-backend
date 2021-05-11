@@ -25,6 +25,10 @@ public class SportjahrDO extends CommonDataObject implements DataObject {
         this.version = version;
     }
 
+
+    public SportjahrDO() { }
+
+
     //getter setter
     public Long getId(){ return  this.id; }
 
