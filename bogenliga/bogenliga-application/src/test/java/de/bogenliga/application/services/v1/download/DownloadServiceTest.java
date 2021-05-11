@@ -56,5 +56,8 @@ public class DownloadServiceTest {
 
     }
 
-
+    @Test
+    public void testDownloadLizenz() {
+        //TODO: Testabdeckung
+    }
 }
