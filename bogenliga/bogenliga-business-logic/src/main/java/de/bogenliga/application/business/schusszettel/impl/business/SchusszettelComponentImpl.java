@@ -93,7 +93,7 @@ public class SchusszettelComponentImpl implements SchusszettelComponent {
         List<MatchDO> matchDOList = matchComponent.findByWettkampfId(wettkampfid);
 
         byte[] bResult;
-        if (!matchDOList.isEmpty()) {
+        if (matchDOList.size() != 0) {
             bResult = generateDoc(matchDOList).toByteArray();
         }else{
             throw new BusinessException(ErrorCode.UNEXPECTED_ERROR, "Matches für den Wettkampf noch nicht erzeugt");
@@ -186,7 +186,7 @@ public class SchusszettelComponentImpl implements SchusszettelComponent {
             MatchDO currentMatch = matchDOs[i-1];
             MatchDO otherMatch = matchDOs[(i == 1 ? 2 : 1) - 1];
             // Skip matches with no passen
-            if (passenDOs[i-1].isEmpty()) {
+            if (passenDOs[i-1].size() == 0) {
                 continue;
             }
 
