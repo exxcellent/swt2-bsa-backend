@@ -15,12 +15,13 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
 import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
-import de.bogenliga.application.business.dsbmannschaft.impl.entity.DsbMannschaftBE;
 import de.bogenliga.application.services.v1.dsbmannschaft.model.DsbMannschaftDTO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
+import de.bogenliga.application.springconfiguration.security.permissions.RequiresOnePermissionAspect;
 
 /**
  * TODO [AL] class documentation
@@ -46,6 +47,9 @@ public class DsbMannschaftServiceTest {
     private DsbMannschaftComponent dsbMannschaftComponent;
 
     @Mock
+    private RequiresOnePermissionAspect requiresOnePermissionAspect;
+
+    @Mock
     private Principal principal;
 
     @InjectMocks
@@ -55,23 +59,6 @@ public class DsbMannschaftServiceTest {
     private ArgumentCaptor<DsbMannschaftDO> dsbMannschaftVOArgumentCaptor;
 
 
-    /***
-     * Utility methods for creating business entities/data objects.
-     * Also used by other test classes.
-     */
-    public static DsbMannschaftBE getDsbMannschaftBE() {
-        final DsbMannschaftBE expectedBE = new DsbMannschaftBE();
-        // expectedBE.setDsbMannschaftId(ID);  in be fehlt set id
-        expectedBE.setId(ID);
-        expectedBE.setVereinId(VEREIN_ID);
-        expectedBE.setNummer(NUMMER);
-        expectedBE.setBenutzerId(BENUTZER_ID);
-        expectedBE.setVeranstaltungId(VERANSTALTUNG_ID);
-        expectedBE.setSortierung(SORTIERUNG);
-
-
-        return expectedBE;
-    }
 
 
     public static DsbMannschaftDO getDsbMannschaftDO() {
@@ -157,32 +144,6 @@ public class DsbMannschaftServiceTest {
         verify(dsbMannschaftComponent).findAllByVereinsId(VEREIN_ID);
     }
 
-    @Test
-    public void findAllByVeranstaltungsId() {
-        // prepare test data
-        final DsbMannschaftDO dsbMannschaftDO = getDsbMannschaftDO();
-        final List<DsbMannschaftDO> dsbMannschaftDOList = Collections.singletonList(dsbMannschaftDO);
-
-        // configure mocks
-        when(dsbMannschaftComponent.findAllByVeranstaltungsId(anyLong())).thenReturn(dsbMannschaftDOList);
-
-        //call test method
-        final List<DsbMannschaftDTO> actual = underTest.findAllByVeranstaltungsId(VERANSTALTUNG_ID);
-
-        //assert result
-        assertThat(actual).isNotNull().hasSize(1);
-
-        final DsbMannschaftDTO actualDTO = actual.get(0);
-
-        assertThat(actualDTO).isNotNull();
-        assertThat(actualDTO.getId()).isEqualTo(dsbMannschaftDO.getId());
-        assertThat(actualDTO.getVeranstaltungId()).isEqualTo(dsbMannschaftDO.getVeranstaltungId());
-        assertThat(actualDTO.getSortierung()).isEqualTo(dsbMannschaftDO.getSortierung());
-
-        //verify invocations
-        verify(dsbMannschaftComponent).findAllByVeranstaltungsId(VERANSTALTUNG_ID);
-    }
-
 
     @Test
     public void findById() {
@@ -215,6 +176,7 @@ public class DsbMannschaftServiceTest {
 
         // configure mocks
         when(dsbMannschaftComponent.create(any(), anyLong())).thenReturn(expected);
+        when(requiresOnePermissionAspect.hasPermission(any())).thenReturn(true);
 
         // call test method
         try {
@@ -243,6 +205,23 @@ public class DsbMannschaftServiceTest {
         }
     }
 
+    @Test
+    public void createNoPermission() {
+        // prepare test data
+        final DsbMannschaftDTO input = getDsbMannschaftDTO();
+
+        final DsbMannschaftDO expected = getDsbMannschaftDO();
+
+        // configure mocks
+        when(dsbMannschaftComponent.create(any(), anyLong())).thenReturn(expected);
+        when(requiresOnePermissionAspect.hasPermission(any())).thenReturn(false);
+        when(requiresOnePermissionAspect.hasSpecificPermissionSportleiter(any(), anyLong())).thenReturn(false);
+
+        assertThatExceptionOfType(NoPermissionException.class)
+                .isThrownBy(()-> underTest.create(input, principal));
+
+    }
+
 
     @Test
     public void update() {
@@ -253,6 +232,7 @@ public class DsbMannschaftServiceTest {
 
         // configure mocks
         when(dsbMannschaftComponent.update(any(), anyLong())).thenReturn(expected);
+        when(requiresOnePermissionAspect.hasPermission(any())).thenReturn(true);
 
         // call test method
         try {
@@ -275,11 +255,27 @@ public class DsbMannschaftServiceTest {
             assertThat(updatedDsbMannschaft.getSortierung()).isEqualTo(input.getSortierung());
 
 
-    } catch (NoPermissionException e) {
-    }
+        } catch (NoPermissionException e) {
+        }
 
     }
 
+    @Test
+    public void updateNoPermission() {
+        // prepare test data
+        final DsbMannschaftDTO input = getDsbMannschaftDTO();
+
+        final DsbMannschaftDO expected = getDsbMannschaftDO();
+
+        // configure mocks
+        when(dsbMannschaftComponent.create(any(), anyLong())).thenReturn(expected);
+        when(requiresOnePermissionAspect.hasPermission(any())).thenReturn(false);
+        when(requiresOnePermissionAspect.hasSpecificPermissionSportleiter(any(), anyLong())).thenReturn(false);
+
+        assertThatExceptionOfType(NoPermissionException.class)
+                .isThrownBy(()-> underTest.update(input, principal));
+
+    }
 
     @Test
     public void delete() {
@@ -300,7 +296,7 @@ public class DsbMannschaftServiceTest {
 
         assertThat(deletedDsbMannschaft).isNotNull();
         assertThat(deletedDsbMannschaft.getId()).isEqualTo(expected.getId());
-        assertThat(deletedDsbMannschaft.getVereinId()).isEqualTo(null);
+        assertThat(deletedDsbMannschaft.getVereinId()).isNull();
     }
 
 }
