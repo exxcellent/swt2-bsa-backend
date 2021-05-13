@@ -83,7 +83,6 @@ public class ConfigurationService implements ServiceFacade {
     @RequiresPermission(UserPermission.CAN_READ_SYSTEMDATEN)
     public List<ConfigurationDTO> findAll() {
         final List<ConfigurationDO> configurationDOList = configurationComponent.findAll();
-        LOG.debug("Received Configuration request");
         return configurationDOList.stream().map(ConfigurationDTOMapper.toDTO).collect(Collectors.toList());
     }
 
@@ -103,14 +102,14 @@ public class ConfigurationService implements ServiceFacade {
      *
      * @return list of {@link ConfigurationDTO} as JSON
      */
-    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "{key}", produces = MediaType.APPLICATION_JSON_VALUE)
     @RequiresPermission(UserPermission.CAN_READ_SYSTEMDATEN)
-    public ConfigurationDTO findById(@PathVariable("id") final long id) {
-        Preconditions.checkArgument(id > 0, "ID must not be negative.");
+    public ConfigurationDTO findByKey(@PathVariable("key") final String key) {
+        Preconditions.checkNotNullOrEmpty(key, "Key string must not null or empty");
 
-        LOG.debug("Receive 'findById' request with id '{}'", id);
+        LOG.debug("Receive 'findByKey' request with key '{}'", key);
 
-        final ConfigurationDO configurationDO = configurationComponent.findById(id);
+        final ConfigurationDO configurationDO = configurationComponent.findByKey(key);
         return ConfigurationDTOMapper.toDTO.apply(configurationDO);
     }
 
@@ -142,11 +141,13 @@ public class ConfigurationService implements ServiceFacade {
     @RequiresPermission(UserPermission.CAN_MODIFY_SYSTEMDATEN)
     public ConfigurationDTO create(@RequestBody final ConfigurationDTO configurationDTO, final Principal principal) {
         Preconditions.checkNotNull(configurationDTO, "ConfigurationDTO must not null");
-        Preconditions.checkArgument(configurationDTO.getId() >= 0, "ConfigurationDTO id must not be negative");
         Preconditions.checkNotNullOrEmpty(configurationDTO.getKey(), "ConfigurationDTO key must not null or empty");
         Preconditions.checkNotNull(configurationDTO.getValue(), "ConfigurationDTO value must not null");
 
-        final ConfigurationDO newConfigurationDO = ConfigurationDTOMapper.toDO.apply(configurationDTO);
+        LOG.debug("Receive 'create' request with key '{}' and value '{}'", configurationDTO.getKey(),
+                configurationDTO.getValue());
+
+        final ConfigurationDO newConfigurationDO = ConfigurationDTOMapper.toVO.apply(configurationDTO);
         final long userId = UserProvider.getCurrentUserId(principal);
 
         final ConfigurationDO savedConfigurationDO = configurationComponent.create(newConfigurationDO, userId);
@@ -170,11 +171,13 @@ public class ConfigurationService implements ServiceFacade {
     @RequiresPermission(UserPermission.CAN_MODIFY_SYSTEMDATEN)
     public ConfigurationDTO update(@RequestBody final ConfigurationDTO configurationDTO, final Principal principal) {
         Preconditions.checkNotNull(configurationDTO, "ConfigurationDTO must not null");
-        Preconditions.checkArgument(configurationDTO.getId() >= 0, "ConfigurationDTO id must not be negative");
         Preconditions.checkNotNullOrEmpty(configurationDTO.getKey(), "ConfigurationDTO key must not null or empty");
         Preconditions.checkNotNull(configurationDTO.getValue(), "ConfigurationDTO value must not null");
 
-        final ConfigurationDO newConfigurationDO = ConfigurationDTOMapper.toDO.apply(configurationDTO);
+        LOG.debug("Receive 'update' request with key '{}' and value '{}'", configurationDTO.getKey(),
+                configurationDTO.getValue());
+
+        final ConfigurationDO newConfigurationDO = ConfigurationDTOMapper.toVO.apply(configurationDTO);
         final long userId = UserProvider.getCurrentUserId(principal);
 
         final ConfigurationDO updatedConfigurationDO = configurationComponent.update(newConfigurationDO, userId);
@@ -188,16 +191,15 @@ public class ConfigurationService implements ServiceFacade {
      * Usage:
      * <pre>{@code Request: DELETE /v1/configuration/app.bogenliga.frontend.autorefresh.active}</pre>
      */
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping(value = "{key}")
     @RequiresPermission(UserPermission.CAN_DELETE_SYSTEMDATEN)
-    public void delete(@PathVariable("id") final long id, final Principal principal) {
-        Preconditions.checkArgument(id >= 0, "ID must not be negative.");
+    public void delete(@PathVariable("key") final String key, final Principal principal) {
+        Preconditions.checkNotNullOrEmpty(key, "Key string must not null or empty");
 
-        LOG.debug("Receive 'delete' request with id '{}'", id);
+        LOG.debug("Receive 'delete' request with key '{}'", key);
 
         // allow value == null, the value will be ignored
-        final ConfigurationDO configurationDO = new ConfigurationDO();
-        configurationDO.setId(id);
+        final ConfigurationDO configurationDO = new ConfigurationDO(key, null);
         final long userId = UserProvider.getCurrentUserId(principal);
 
         configurationComponent.delete(configurationDO, userId);

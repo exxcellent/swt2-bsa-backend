@@ -31,7 +31,6 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings({"pmd-unit-tests:JUnitTestsShouldIncludeAssert", "squid:S2187"})
 public class ConfigurationServiceTest {
 
-    private static final long ID = 63455;
     private static final String KEY = "key";
     private static final String VALUE = "value";
     private static final long USER = 0;
@@ -61,7 +60,6 @@ public class ConfigurationServiceTest {
     public void findAll() {
         // prepare test data
         final ConfigurationDO configurationDO = new ConfigurationDO();
-        configurationDO.setId(ID);
         configurationDO.setKey(KEY);
         configurationDO.setValue(VALUE);
 
@@ -81,7 +79,6 @@ public class ConfigurationServiceTest {
         final ConfigurationDTO actualDTO = actual.get(0);
 
         assertThat(actualDTO).isNotNull();
-        assertThat(actualDTO.getId()).isEqualTo(configurationDO.getId());
         assertThat(actualDTO.getKey()).isEqualTo(configurationDO.getKey());
         assertThat(actualDTO.getValue()).isEqualTo(configurationDO.getValue());
 
@@ -91,30 +88,25 @@ public class ConfigurationServiceTest {
 
 
     @Test
-    public void findByKey() {   //TODO remove unused lines
+    public void findByKey() {
         // prepare test data
         final ConfigurationDO configurationDO = new ConfigurationDO();
-        configurationDO.setId(ID);
         configurationDO.setKey(KEY);
         configurationDO.setValue(VALUE);
 
         // configure mocks
-        //when(configurationComponent.findByKey(any())).thenReturn(configurationDO);
-        when(configurationComponent.findById(anyLong())).thenReturn(configurationDO);
+        when(configurationComponent.findByKey(any())).thenReturn(configurationDO);
 
         // call test method
-        //final ConfigurationDTO actual = underTest.findByKey(KEY);
-        final ConfigurationDTO actual = underTest.findById(ID);
+        final ConfigurationDTO actual = underTest.findByKey(KEY);
 
         // assert result
         assertThat(actual).isNotNull();
-        assertThat(actual.getId()).isEqualTo(configurationDO.getId());
         assertThat(actual.getKey()).isEqualTo(configurationDO.getKey());
         assertThat(actual.getValue()).isEqualTo(configurationDO.getValue());
 
         // verify invocations
-        //verify(configurationComponent).findByKey(KEY);
-        verify(configurationComponent).findById(ID);
+        verify(configurationComponent).findByKey(KEY);
     }
 
 
@@ -122,12 +114,10 @@ public class ConfigurationServiceTest {
     public void create() {
         // prepare test data
         final ConfigurationDTO input = new ConfigurationDTO();
-        input.setId(ID);
         input.setKey(KEY);
         input.setValue(VALUE);
 
         final ConfigurationDO expected = new ConfigurationDO();
-        expected.setId(input.getId());
         expected.setKey(input.getKey());
         expected.setValue(input.getValue());
 
@@ -139,7 +129,6 @@ public class ConfigurationServiceTest {
 
         // assert result
         assertThat(actual).isNotNull();
-        assertThat(actual.getId()).isEqualTo(input.getId());
         assertThat(actual.getKey()).isEqualTo(input.getKey());
         assertThat(actual.getValue()).isEqualTo(input.getValue());
 
@@ -149,7 +138,6 @@ public class ConfigurationServiceTest {
         final ConfigurationDO createdConfiguration = configurationVOArgumentCaptor.getValue();
 
         assertThat(createdConfiguration).isNotNull();
-        assertThat(createdConfiguration.getId()).isEqualTo(input.getId());
         assertThat(createdConfiguration.getKey()).isEqualTo(input.getKey());
         assertThat(createdConfiguration.getValue()).isEqualTo(input.getValue());
     }
@@ -159,12 +147,10 @@ public class ConfigurationServiceTest {
     public void update() {
         // prepare test data
         final ConfigurationDTO input = new ConfigurationDTO();
-        input.setId(ID);
         input.setKey(KEY);
         input.setValue(VALUE);
 
         final ConfigurationDO expected = new ConfigurationDO();
-        expected.setId(input.getId());
         expected.setKey(input.getKey());
         expected.setValue(input.getValue());
 
@@ -176,7 +162,6 @@ public class ConfigurationServiceTest {
 
         // assert result
         assertThat(actual).isNotNull();
-        assertThat(actual.getId()).isEqualTo(input.getId());
         assertThat(actual.getKey()).isEqualTo(input.getKey());
         assertThat(actual.getValue()).isEqualTo(input.getValue());
 
@@ -186,24 +171,21 @@ public class ConfigurationServiceTest {
         final ConfigurationDO updatedConfiguration = configurationVOArgumentCaptor.getValue();
 
         assertThat(updatedConfiguration).isNotNull();
-        assertThat(updatedConfiguration.getId()).isEqualTo(input.getId());
         assertThat(updatedConfiguration.getKey()).isEqualTo(input.getKey());
         assertThat(updatedConfiguration.getValue()).isEqualTo(input.getValue());
     }
 
 
     @Test
-    public void delete() {  //TODO remove unused lines
+    public void delete() {
         // prepare test data
         final ConfigurationDO expected = new ConfigurationDO();
-        expected.setId(ID);
-        //expected.setKey(KEY);
+        expected.setKey(KEY);
 
         // configure mocks
 
         // call test method
-        //underTest.delete(KEY, principal);
-        underTest.delete(ID, principal);
+        underTest.delete(KEY, principal);
 
         // assert result
 
@@ -213,8 +195,7 @@ public class ConfigurationServiceTest {
         final ConfigurationDO deletedConfiguration = configurationVOArgumentCaptor.getValue();
 
         assertThat(deletedConfiguration).isNotNull();
-        assertThat(deletedConfiguration.getId()).isEqualTo(expected.getId());
-        //assertThat(deletedConfiguration.getKey()).isEqualTo(expected.getKey());
+        assertThat(deletedConfiguration.getKey()).isEqualTo(expected.getKey());
         assertThat(deletedConfiguration.getValue()).isNullOrEmpty();
     }
 }
