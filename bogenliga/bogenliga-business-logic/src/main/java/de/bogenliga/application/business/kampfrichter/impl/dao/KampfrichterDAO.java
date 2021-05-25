@@ -1,7 +1,6 @@
 package de.bogenliga.application.business.kampfrichter.impl.dao;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +13,7 @@ import de.bogenliga.application.common.component.dao.BasicDAO;
 import de.bogenliga.application.common.component.dao.BusinessEntityConfiguration;
 import de.bogenliga.application.common.component.dao.DataAccessObject;
 import de.bogenliga.application.common.database.SQL;
-import de.bogenliga.application.common.errorhandling.ErrorCode;
-import de.bogenliga.application.common.errorhandling.exception.TechnicalException;
+
 
 /**
  * DataAccessObject for the kampfrichter entity in the database.
@@ -150,58 +148,6 @@ public class KampfrichterDAO implements DataAccessObject {
     public void delete(final KampfrichterBE kampfrichterBE, final long currentKampfrichterUserId) {
         basicDao.setModificationAttributes(kampfrichterBE, currentKampfrichterUserId);
 
-        basicDao.deleteEntity(KAMPFRICHTER, kampfrichterBE, KAMPFRICHTER_BE_ID);
+        basicDao.deleteEntity(KAMPFRICHTER, kampfrichterBE, KAMPFRICHTER_BE_ID, KAMPFRICHTER_BE_COMPETITION_ID);
     }
-
-
-    // TODO: See if this works
-    public void testDelete(final KampfrichterBE kampfrichterBE) {
-        basicDao.setModificationAttributes(kampfrichterBE, kampfrichterBE.getKampfrichterUserId());
-
-        String sqlString = String.format("kampfrichter_wettkampf_id = %s AND %s;",
-                kampfrichterBE.getKampfrichterWettkampfId().toString(), KAMPFRICHTER_BE_ID);
-
-        basicDao.deleteEntity(KAMPFRICHTER, kampfrichterBE, sqlString);
-    }
-
-
-    // TODO: Delete all this if not needed
-    public void myDelete(final KampfrichterBE kampfrichterBE) {
-        String string = String.format(
-                "DELETE FROM kampfrichter WHERE kampfrichter_benutzer_id = %s AND kampfrichter_wettkampf_id = %s;",
-                kampfrichterBE.getKampfrichterUserId().toString(),
-                kampfrichterBE.getKampfrichterWettkampfId().toString());
-//        String.format("The user with the username %s already exists.", user.getUsername())
-    }
-
-
-//    public static SQL.SQLWithParameter deleteSQL(final Object updateObj, final String tableName,
-//                                                 final String[] fieldSelector,
-//                                                 final Map<String, String> columnToFieldMapping) {
-//        final SQL.SQLWithParameter sqlWithParameter = new SQL().new SQLWithParameter();
-//        final StringBuilder sql = new StringBuilder();
-//        final List<Object> para;
-//
-//        sql.append("DELETE FROM ");
-//
-//        try {
-//            final String tName = updateObj.getClass().getSimpleName();
-//
-//            if (tableName != null) {
-//                sql.append(tableName);
-//            } else {
-//                sql.append(tName);
-//            }
-//
-//            final Field[] fields = updateObj.getClass().getDeclaredFields();
-//
-//            para = appendFieldsToDeleteStatement(updateObj, fieldSelector, fields);
-//        } catch (final SecurityException | IllegalArgumentException | NoSuchMethodException | IllegalAccessException
-//                | InvocationTargetException e) {
-//            throw new TechnicalException(ErrorCode.DATABASE_ERROR, e);
-//        }
-//
-//        sqlWithParameter.setParameter(para.toArray());
-//        return appendWhereStatements(sql, fieldSelector, columnToFieldMapping, sqlWithParameter);
-//    }
 }
