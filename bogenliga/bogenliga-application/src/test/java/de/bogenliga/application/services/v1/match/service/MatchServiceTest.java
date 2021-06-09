@@ -7,7 +7,6 @@ import java.util.*;
 import javax.naming.NoPermissionException;
 
 import de.bogenliga.application.business.veranstaltung.api.VeranstaltungComponent;
-import de.bogenliga.application.springconfiguration.security.jsonwebtoken.JwtTokenProvider;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,8 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.MannschaftComponent;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.business.passe.api.PasseComponent;
 import de.bogenliga.application.business.passe.api.types.PasseDO;
 import de.bogenliga.application.business.mannschaftsmitglied.api.MannschaftsmitgliedComponent;
@@ -67,7 +66,7 @@ public class MatchServiceTest {
     private WettkampfTypComponent wettkampfTypComponent;
 
     @Mock
-    private DsbMannschaftComponent mannschaftComponent;
+    private MannschaftComponent mannschaftComponent;
 
     @Mock
     private RequiresOnePermissionAspect requiresOnePermissionAspect;
@@ -226,8 +225,8 @@ public class MatchServiceTest {
     }
 
 
-    protected DsbMannschaftDO getMannschaftDO(Long id) {
-        return new DsbMannschaftDO(
+    protected MannschaftDO getMannschaftDO(Long id) {
+        return new MannschaftDO(
                 id,
                 M_name,
                 M_vereinId,
@@ -288,7 +287,7 @@ public class MatchServiceTest {
     @Test
     public void findById() {
         MatchDO matchDO1 = getMatchDO();
-        DsbMannschaftDO mannschaftDO = getMannschaftDO(M_id);
+        MannschaftDO mannschaftDO = getMannschaftDO(M_id);
         WettkampfTypDO wettkampftypDO = getWettkampfTypDO(W_typId);
         WettkampfDO wettkampfDO = getWettkampfDO(W_id);
         VereinDO vereinDO = getVereinDO(VEREIN_ID);
@@ -315,7 +314,7 @@ public class MatchServiceTest {
     @Test
     public void findMatchesByIds() {
         MatchDO matchDO1 = getMatchDO();
-        DsbMannschaftDO mannschaftDO = getMannschaftDO(M_id);
+        MannschaftDO mannschaftDO = getMannschaftDO(M_id);
         WettkampfTypDO wettkampftypDO = getWettkampfTypDO(W_typId);
         WettkampfDO wettkampfDO = getWettkampfDO(W_id);
         VereinDO vereinDO = getVereinDO(VEREIN_ID);
@@ -615,7 +614,7 @@ public class MatchServiceTest {
         matchesDO.add(matchDO1);
         matchesDO.add(matchDO1);
 
-        DsbMannschaftDO mannschaftDO = getMannschaftDO(M_id);
+        MannschaftDO mannschaftDO = getMannschaftDO(M_id);
         VereinDO vereinDO = getVereinDO(VEREIN_ID);
 
         matchDTO.setMannschaftName(vereinDO.getName() + '-' + mannschaftDO.getNummer());

@@ -22,8 +22,8 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 import de.bogenliga.application.business.bogenkontrollliste.api.BogenkontrolllisteComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.MannschaftComponent;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.business.dsbmitglied.api.DsbMitgliedComponent;
 import de.bogenliga.application.business.dsbmitglied.api.types.DsbMitgliedDO;
 import de.bogenliga.application.business.liga.api.LigaComponent;
@@ -61,7 +61,7 @@ public class BogenkontrolllisteComponentImpl implements BogenkontrolllisteCompon
     private static final String PRECONDITION_WETTKAMPFDO = "wettkampfDO cannot be null";
     private static final String PRECONDITION_VERANSTALTUNGSNAME =  "veranstaltungsName cannot be null";
 
-    private final DsbMannschaftComponent dsbMannschaftComponent;
+    private final MannschaftComponent mannschaftComponent;
     private final VereinComponent vereinComponent;
     private final LigaComponent ligaComponent;
     private final WettkampfComponent wettkampfComponent;
@@ -73,7 +73,7 @@ public class BogenkontrolllisteComponentImpl implements BogenkontrolllisteCompon
 
 
     @Autowired
-    public BogenkontrolllisteComponentImpl(final DsbMannschaftComponent dsbMannschaftComponent,
+    public BogenkontrolllisteComponentImpl(final MannschaftComponent mannschaftComponent,
                                            final VereinComponent vereinComponent,
                                            final LigaComponent ligaComponent,
                                            final WettkampfComponent wettkampfComponent,
@@ -82,7 +82,7 @@ public class BogenkontrolllisteComponentImpl implements BogenkontrolllisteCompon
                                            final PasseComponent passeComponent,
                                            final MannschaftsmitgliedComponent mannschaftsmitgliedComponent,
                                            final DsbMitgliedComponent dsbMitgliedComponent) {
-        this.dsbMannschaftComponent = dsbMannschaftComponent;
+        this.mannschaftComponent = mannschaftComponent;
         this.vereinComponent = vereinComponent;
         this.ligaComponent = ligaComponent;
         this.wettkampfComponent = wettkampfComponent;
@@ -119,7 +119,7 @@ public class BogenkontrolllisteComponentImpl implements BogenkontrolllisteCompon
             List<LigaDO> ligen=this.ligaComponent.findAll();
             int count = 0;
             for(MannschaftsmitgliedDO mannschaftsmitglied: mannschaftsmitgliedDOList){
-                DsbMitgliedDO dsbMitglied=dsbMitgliedComponent.findById(mannschaftsmitglied.getDsbMitgliedId());
+                DsbMitgliedDO dsbMitglied= dsbMitgliedComponent.findById(mannschaftsmitglied.getDsbMitgliedId());
                 long thisLiga=this.veranstaltungComponent.findById(this.wettkampfComponent.findById(matchDO.getWettkampfId()).getWettkampfVeranstaltungsId()).getVeranstaltungLigaID();
 
                 //finde Stufe der aktuellen Liga
@@ -452,10 +452,10 @@ public class BogenkontrolllisteComponentImpl implements BogenkontrolllisteCompon
      */
     private String getTeamName(long teamID) {
         Preconditions.checkArgument(teamID >= 0,"TeamID cannot be Negative");
-        DsbMannschaftDO dsbMannschaftDO = dsbMannschaftComponent.findById(teamID);
-        VereinDO vereinDO = vereinComponent.findById(dsbMannschaftDO.getVereinId());
-        if (dsbMannschaftDO.getNummer() > 1) {
-            return vereinDO.getName() + " " + dsbMannschaftDO.getNummer();
+        MannschaftDO mannschaftDO = mannschaftComponent.findById(teamID);
+        VereinDO vereinDO = vereinComponent.findById(mannschaftDO.getVereinId());
+        if (mannschaftDO.getNummer() > 1) {
+            return vereinDO.getName() + " " + mannschaftDO.getNummer();
         } else {
             return vereinDO.getName();
         }

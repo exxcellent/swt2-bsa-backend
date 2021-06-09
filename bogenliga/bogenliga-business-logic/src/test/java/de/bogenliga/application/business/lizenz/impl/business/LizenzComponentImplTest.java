@@ -12,7 +12,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import de.bogenliga.application.business.mannschaftsmitglied.api.types.MannschaftsmitgliedDO;
 import de.bogenliga.application.business.mannschaftsmitglied.api.MannschaftsmitgliedComponent;
-import de.bogenliga.application.business.mannschaftsmitglied.api.types.MannschaftsmitgliedDO;
 import de.bogenliga.application.business.vereine.api.types.VereinDO;
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
@@ -22,12 +21,11 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import com.itextpdf.layout.Document;
-import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.MannschaftComponent;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.business.dsbmitglied.api.DsbMitgliedComponent;
 import de.bogenliga.application.business.dsbmitglied.api.types.DsbMitgliedDO;
 import de.bogenliga.application.business.lizenz.api.types.LizenzDO;
@@ -63,7 +61,7 @@ public class LizenzComponentImplTest {
     @Mock
     private DsbMitgliedComponent dsbMitgliedComponent;
     @Mock
-    private DsbMannschaftComponent mannschaftComponent;
+    private MannschaftComponent mannschaftComponent;
     @Mock
     private MannschaftsmitgliedComponent mannschaftsmitgliedComponent;
     @Mock
@@ -108,11 +106,11 @@ public class LizenzComponentImplTest {
         return vereinDo;
     }
 
-    public static DsbMannschaftDO getDsbMannschaftDO(Long mannschaftID, Long vereinID) {
-        DsbMannschaftDO dsbMannschaftDO = new DsbMannschaftDO(
+    public static MannschaftDO getDsbMannschaftDO(Long mannschaftID, Long vereinID) {
+        MannschaftDO mannschaftDO = new MannschaftDO(
                 mannschaftID, vereinID);
 
-        return dsbMannschaftDO;
+        return mannschaftDO;
     }
 
 
@@ -292,7 +290,7 @@ public class LizenzComponentImplTest {
         expectedMitglied.setId(mitgliedId);
         expectedMitglied.setNachname("Musterfrau");
         expectedMitglied.setVorname("Maxime");
-        DsbMannschaftDO expectedMannschaft = Mockito.mock(DsbMannschaftDO.class);
+        MannschaftDO expectedMannschaft = Mockito.mock(MannschaftDO.class);
         expectedMannschaft.setId(teamId);
         expectedMannschaft.setVeranstaltungId(veranstaltungId);
         VeranstaltungDO expectedVeranstaltung = new VeranstaltungDO(veranstaltungId);
@@ -390,7 +388,7 @@ public class LizenzComponentImplTest {
         expectedMitglied.setId(mitgliedId);
         expectedMitglied.setNachname("Musterfrau");
         expectedMitglied.setVorname("Maxime");
-        DsbMannschaftDO expectedMannschaft = Mockito.mock(DsbMannschaftDO.class);
+        MannschaftDO expectedMannschaft = Mockito.mock(MannschaftDO.class);
         expectedMannschaft.setId(teamId);
         expectedMannschaft.setVeranstaltungId(veranstaltungId);
         VeranstaltungDO expectedVeranstaltung = new VeranstaltungDO(veranstaltungId);

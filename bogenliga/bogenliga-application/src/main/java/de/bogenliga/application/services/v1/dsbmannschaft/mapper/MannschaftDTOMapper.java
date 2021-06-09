@@ -1,19 +1,19 @@
 package de.bogenliga.application.services.v1.dsbmannschaft.mapper;
 
 import java.util.function.Function;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.common.service.mapping.DataTransferObjectMapper;
-import de.bogenliga.application.services.v1.dsbmannschaft.model.DsbMannschaftDTO;
+import de.bogenliga.application.services.v1.dsbmannschaft.model.MannschaftDTO;
 
 /**
 
- * I map the {@link DsbMannschaftDO} and {@link DsbMannschaftDTO} objects
+ * I map the {@link MannschaftDO} and {@link MannschaftDTO} objects
  *
  * @author Philip Dengler
  */
-public class DsbMannschaftDTOMapper implements DataTransferObjectMapper {
+public class MannschaftDTOMapper implements DataTransferObjectMapper {
 
-    public static final Function<DsbMannschaftDO, DsbMannschaftDTO> toDTO = dsbMannschaftDO -> {
+    public static final Function<MannschaftDO, MannschaftDTO> toDTO = dsbMannschaftDO -> {
 
 
         final Long dsbMannschaftId = dsbMannschaftDO.getId();
@@ -24,7 +24,7 @@ public class DsbMannschaftDTOMapper implements DataTransferObjectMapper {
         final Long dsbMannschaftSortierung = dsbMannschaftDO.getSortierung();
         final String dsbMannschaftName = dsbMannschaftDO.getName();
 
-        return new DsbMannschaftDTO(dsbMannschaftId,
+        return new MannschaftDTO(dsbMannschaftId,
                 dsbMannschaftName,
                 dsbMannschaftVereinId,
                 dsbMannschaftNummer,
@@ -37,11 +37,11 @@ public class DsbMannschaftDTOMapper implements DataTransferObjectMapper {
     };
 
     /**
-     * I map the {@link DsbMannschaftDTO} object to the {@link DsbMannschaftDO} object
+     * I map the {@link MannschaftDTO} object to the {@link MannschaftDO} object
      */
 
 
-    public static final Function<DsbMannschaftDTO, DsbMannschaftDO> toDO = dto -> {
+    public static final Function<MannschaftDTO, MannschaftDO> toDO = dto -> {
 
 
         final Long dsbMannschaftId = dto.getId();
@@ -52,7 +52,7 @@ public class DsbMannschaftDTOMapper implements DataTransferObjectMapper {
         final Long dsbMannschaftSoriterung = dto.getSortierung();
         final String dsbMannschaftName = dto.getName();
 
-        return new DsbMannschaftDO(dsbMannschaftId,
+        return new MannschaftDO(dsbMannschaftId,
                 dsbMannschaftName,
                 dsbMannschaftVereinId,
                 dsbMannschaftNummer,
@@ -68,7 +68,7 @@ public class DsbMannschaftDTOMapper implements DataTransferObjectMapper {
      * Constructor
      */
 
-    private DsbMannschaftDTOMapper() {
+    private MannschaftDTOMapper() {
         // empty private constructor
     }
 

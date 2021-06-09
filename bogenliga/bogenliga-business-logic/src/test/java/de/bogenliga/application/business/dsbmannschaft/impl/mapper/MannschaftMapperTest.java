@@ -1,13 +1,13 @@
 package de.bogenliga.application.business.dsbmannschaft.impl.mapper;
 
 import org.junit.Test;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
-import de.bogenliga.application.business.dsbmannschaft.impl.entity.DsbMannschaftBE;
-import static de.bogenliga.application.business.dsbmannschaft.impl.business.DsbMannschaftComponentImplTest.getDsbMannschaftBE;
-import static de.bogenliga.application.business.dsbmannschaft.impl.business.DsbMannschaftComponentImplTest.getDsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.impl.entity.MannschaftBE;
+import static de.bogenliga.application.business.dsbmannschaft.impl.business.MannschaftComponentImplTest.getDsbMannschaftBE;
+import static de.bogenliga.application.business.dsbmannschaft.impl.business.MannschaftComponentImplTest.getDsbMannschaftDO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DsbMannschaftMapperTest {
+public class MannschaftMapperTest {
 
     private static final Long USER = 0L;
     private static final Long VERSION = 0L;
@@ -21,9 +21,9 @@ public class DsbMannschaftMapperTest {
 
     @Test
     public void toVO() throws Exception {
-        final DsbMannschaftBE dsbMannschaftBE =  getDsbMannschaftBE();
+        final MannschaftBE mannschaftBE =  getDsbMannschaftBE();
 
-        final DsbMannschaftDO actual = DsbMannschaftMapper.toDsbMannschaftDO.apply(dsbMannschaftBE);
+        final MannschaftDO actual = MannschaftMapper.toDsbMannschaftDO.apply(mannschaftBE);
 
         assertThat(actual.getId()).isEqualTo(ID);
         assertThat(actual.getVereinId()).isEqualTo(VEREINID);
@@ -31,9 +31,9 @@ public class DsbMannschaftMapperTest {
 
     @Test
     public void toBE() throws Exception {
-        final DsbMannschaftDO dsbMannschaftDO = getDsbMannschaftDO();
+        final MannschaftDO mannschaftDO = getDsbMannschaftDO();
 
-        final DsbMannschaftBE actual = DsbMannschaftMapper.toDsbMannschaftBE.apply(dsbMannschaftDO);
+        final MannschaftBE actual = MannschaftMapper.toDsbMannschaftBE.apply(mannschaftDO);
 
         assertThat(actual.getId()).isEqualTo(ID);
         assertThat(actual.getVereinId()).isEqualTo(VEREINID);

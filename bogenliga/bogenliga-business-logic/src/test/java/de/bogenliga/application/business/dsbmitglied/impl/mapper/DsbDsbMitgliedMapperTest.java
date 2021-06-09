@@ -4,8 +4,8 @@ import java.sql.Date;
 import org.junit.Test;
 import de.bogenliga.application.business.dsbmitglied.api.types.DsbMitgliedDO;
 import de.bogenliga.application.business.dsbmitglied.impl.entity.DsbMitgliedBE;
-import static de.bogenliga.application.business.dsbmitglied.impl.business.DsbMitgliedComponentImplTest.getDsbMitgliedBE;
-import static de.bogenliga.application.business.dsbmitglied.impl.business.DsbMitgliedComponentImplTest.getDsbMitgliedDO;
+import static de.bogenliga.application.business.dsbmitglied.impl.business.DsbDsbMitgliedComponentImplTest.getDsbMitgliedBE;
+import static de.bogenliga.application.business.dsbmitglied.impl.business.DsbDsbMitgliedComponentImplTest.getDsbMitgliedDO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see <a href="https://site.mockito.org/">
  * Mockito</a>
  */
-public class DsbMitgliedMapperTest {
+public class DsbDsbMitgliedMapperTest {
 
     private static final long USER = 0;
 

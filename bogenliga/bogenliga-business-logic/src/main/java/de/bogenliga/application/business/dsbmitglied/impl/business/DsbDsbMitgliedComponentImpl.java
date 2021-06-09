@@ -3,12 +3,12 @@ package de.bogenliga.application.business.dsbmitglied.impl.business;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.bogenliga.application.business.dsbmitglied.api.DsbMitgliedComponent;
 import de.bogenliga.application.business.lizenz.impl.dao.LizenzDAO;
 import de.bogenliga.application.business.lizenz.impl.entity.LizenzBE;
 import de.bogenliga.application.business.lizenz.impl.mapper.KampfrichterlizenzMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import de.bogenliga.application.business.dsbmitglied.api.DsbMitgliedComponent;
 import de.bogenliga.application.business.dsbmitglied.api.types.DsbMitgliedDO;
 import de.bogenliga.application.business.dsbmitglied.impl.dao.DsbMitgliedDAO;
 import de.bogenliga.application.business.dsbmitglied.impl.entity.DsbMitgliedBE;
@@ -21,7 +21,7 @@ import de.bogenliga.application.common.validation.Preconditions;
  * Implementation of {@link DsbMitgliedComponent}
  */
 @Component
-public class DsbMitgliedComponentImpl implements DsbMitgliedComponent {
+public class DsbDsbMitgliedComponentImpl implements DsbMitgliedComponent {
 
     private static final String PRECONDITION_MSG_DSBMITGLIED = "DsbMitgliedDO must not be null";
     private static final String PRECONDITION_MSG_DSBMITGLIED_ID = "DsbMitgliedDO ID must not be negative";
@@ -46,7 +46,7 @@ public class DsbMitgliedComponentImpl implements DsbMitgliedComponent {
      * @param dsbMitgliedDAO to access the database and return dsbmitglied representations
      */
     @Autowired
-    public DsbMitgliedComponentImpl(final DsbMitgliedDAO dsbMitgliedDAO, final LizenzDAO lizenzDAO) {
+    public DsbDsbMitgliedComponentImpl(final DsbMitgliedDAO dsbMitgliedDAO, final LizenzDAO lizenzDAO) {
         this.dsbMitgliedDAO = dsbMitgliedDAO;
         this.lizenzDAO = lizenzDAO;
     }

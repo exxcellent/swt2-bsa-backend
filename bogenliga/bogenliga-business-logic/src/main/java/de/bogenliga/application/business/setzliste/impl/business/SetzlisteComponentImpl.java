@@ -20,8 +20,8 @@ import com.itextpdf.layout.element.Table;
 import de.bogenliga.application.business.setzliste.api.SetzlisteComponent;
 import de.bogenliga.application.business.setzliste.impl.dao.SetzlisteDAO;
 import de.bogenliga.application.business.setzliste.impl.entity.SetzlisteBE;
-import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.MannschaftComponent;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.business.match.api.MatchComponent;
 import de.bogenliga.application.business.match.api.types.MatchDO;
 import de.bogenliga.application.business.veranstaltung.api.VeranstaltungComponent;
@@ -51,7 +51,7 @@ public class SetzlisteComponentImpl implements SetzlisteComponent {
     private final MatchComponent matchComponent;
     private final WettkampfComponent wettkampfComponent;
     private final VeranstaltungComponent veranstaltungComponent;
-    private final DsbMannschaftComponent dsbMannschaftComponent;
+    private final MannschaftComponent mannschaftComponent;
     private final VereinComponent vereinComponent;
 
     /**
@@ -78,12 +78,12 @@ public class SetzlisteComponentImpl implements SetzlisteComponent {
     @Autowired
     public SetzlisteComponentImpl(SetzlisteDAO setzlisteDAO, MatchComponent matchComponent,
                                   WettkampfComponent wettkampfComponent, VeranstaltungComponent veranstaltungComponent,
-                                  DsbMannschaftComponent dsbMannschaftComponent, VereinComponent vereinComponent) {
+                                  MannschaftComponent mannschaftComponent, VereinComponent vereinComponent) {
         this.setzlisteDAO = setzlisteDAO;
         this.matchComponent = matchComponent;
         this.wettkampfComponent = wettkampfComponent;
         this.veranstaltungComponent = veranstaltungComponent;
-        this.dsbMannschaftComponent = dsbMannschaftComponent;
+        this.mannschaftComponent = mannschaftComponent;
         this.vereinComponent = vereinComponent;
     }
 
@@ -259,10 +259,10 @@ public class SetzlisteComponentImpl implements SetzlisteComponent {
             LOGGER.error("Cannot find team for tablepos");
             return "ERROR";
         } else {
-            DsbMannschaftDO dsbMannschaftDO = dsbMannschaftComponent.findById(teamID);
-            VereinDO vereinDO = vereinComponent.findById(dsbMannschaftDO.getVereinId());
-            if (dsbMannschaftDO.getNummer() > 1) {
-                return vereinDO.getName() + " " + dsbMannschaftDO.getNummer();
+            MannschaftDO mannschaftDO = mannschaftComponent.findById(teamID);
+            VereinDO vereinDO = vereinComponent.findById(mannschaftDO.getVereinId());
+            if (mannschaftDO.getNummer() > 1) {
+                return vereinDO.getName() + " " + mannschaftDO.getNummer();
             } else {
                 return vereinDO.getName();
             }

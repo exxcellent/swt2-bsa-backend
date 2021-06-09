@@ -24,8 +24,8 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
-import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.MannschaftComponent;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.business.dsbmitglied.api.DsbMitgliedComponent;
 import de.bogenliga.application.business.dsbmitglied.api.types.DsbMitgliedDO;
 import de.bogenliga.application.business.lizenz.api.LizenzComponent;
@@ -66,7 +66,7 @@ public class LizenzComponentImpl implements LizenzComponent {
     private final LizenzDAO lizenzDAO;
     private final VereinComponent vereinComponent;
     private final DsbMitgliedComponent dsbMitgliedComponent;
-    private final DsbMannschaftComponent mannschaftComponent;
+    private final MannschaftComponent mannschaftComponent;
     private final VeranstaltungComponent veranstaltungComponent;
     private final WettkampfComponent wettkampfComponent;
     private final MannschaftsmitgliedComponent mannschaftsmitgliedComponent;
@@ -101,7 +101,7 @@ public class LizenzComponentImpl implements LizenzComponent {
      */
     @Autowired
     public LizenzComponentImpl(final LizenzDAO lizenzDAO, final VereinComponent vereinComponent,
-                               final DsbMitgliedComponent dsbMitglied, final DsbMannschaftComponent mannschaftComponent,
+                               final DsbMitgliedComponent dsbMitglied, final MannschaftComponent mannschaftComponent,
                                final VeranstaltungComponent veranstaltungComponent,
                                final WettkampfComponent wettkampfComponent,
                                MannschaftsmitgliedComponent mannschaftsmitgliedComponent) {
@@ -168,7 +168,7 @@ public class LizenzComponentImpl implements LizenzComponent {
     public byte[] getLizenzPDFasByteArray(long dsbMitgliedID, long teamID) {
         byte[] result;
         DsbMitgliedDO mitgliedDO = dsbMitgliedComponent.findById(dsbMitgliedID);
-        DsbMannschaftDO mannschaftDO = mannschaftComponent.findById(teamID);
+        MannschaftDO mannschaftDO = mannschaftComponent.findById(teamID);
         VeranstaltungDO veranstaltungDO = veranstaltungComponent.findById(mannschaftDO.getVeranstaltungId());
         List<WettkampfDO> wettkampfDOList = wettkampfComponent.findAllByVeranstaltungId(
                 veranstaltungDO.getVeranstaltungID());
@@ -187,7 +187,7 @@ public class LizenzComponentImpl implements LizenzComponent {
 
         //Collect information
 
-        DsbMannschaftDO mannschaftDO = mannschaftComponent.findById(dsbMannschaftsId);
+        MannschaftDO mannschaftDO = mannschaftComponent.findById(dsbMannschaftsId);
         VeranstaltungDO veranstaltungDO = veranstaltungComponent.findById(mannschaftDO.getVeranstaltungId());
         List<WettkampfDO> wettkampfDOList = wettkampfComponent.findAllByVeranstaltungId(
                 veranstaltungDO.getVeranstaltungID());

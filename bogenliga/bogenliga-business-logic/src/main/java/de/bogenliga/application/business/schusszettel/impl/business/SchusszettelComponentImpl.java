@@ -30,8 +30,8 @@ import de.bogenliga.application.business.mannschaftsmitglied.api.types.Mannschaf
 import de.bogenliga.application.business.passe.api.PasseComponent;
 import de.bogenliga.application.business.passe.api.types.PasseDO;
 import de.bogenliga.application.business.schusszettel.api.SchusszettelComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.DsbMannschaftComponent;
-import de.bogenliga.application.business.dsbmannschaft.api.types.DsbMannschaftDO;
+import de.bogenliga.application.business.dsbmannschaft.api.MannschaftComponent;
+import de.bogenliga.application.business.dsbmannschaft.api.types.MannschaftDO;
 import de.bogenliga.application.business.match.api.MatchComponent;
 import de.bogenliga.application.business.match.api.types.MatchDO;
 import de.bogenliga.application.business.vereine.api.VereinComponent;
@@ -66,7 +66,7 @@ public class SchusszettelComponentImpl implements SchusszettelComponent {
 
     private final MatchComponent matchComponent;
     private final PasseComponent passeComponent;
-    private final DsbMannschaftComponent dsbMannschaftComponent;
+    private final MannschaftComponent mannschaftComponent;
     private final MannschaftsmitgliedComponent mannschaftsmitgliedComponent;
     private final VereinComponent vereinComponent;
     private final WettkampfComponent wettkampfComponent;
@@ -74,13 +74,13 @@ public class SchusszettelComponentImpl implements SchusszettelComponent {
     @Autowired
     public SchusszettelComponentImpl(final MatchComponent matchComponent,
                                      final PasseComponent passeComponent,
-                                     final DsbMannschaftComponent dsbMannschaftComponent,
+                                     final MannschaftComponent mannschaftComponent,
                                      final MannschaftsmitgliedComponent mannschaftsmitgliedComponent,
                                      final VereinComponent vereinComponent,
                                      final WettkampfComponent wettkampfComponent) {
         this.matchComponent = matchComponent;
         this.passeComponent = passeComponent;
-        this.dsbMannschaftComponent = dsbMannschaftComponent;
+        this.mannschaftComponent = mannschaftComponent;
         this.mannschaftsmitgliedComponent = mannschaftsmitgliedComponent;
         this.vereinComponent = vereinComponent;
         this.wettkampfComponent = wettkampfComponent;
@@ -970,11 +970,11 @@ public class SchusszettelComponentImpl implements SchusszettelComponent {
 
     private String getMannschaftsNameByID(long mannschaftID){
         String mannschaftName;
-        DsbMannschaftDO dsbMannschaftDO = dsbMannschaftComponent.findById(mannschaftID);
-        VereinDO vereinDO = vereinComponent.findById(dsbMannschaftDO.getVereinId());
+        MannschaftDO mannschaftDO = mannschaftComponent.findById(mannschaftID);
+        VereinDO vereinDO = vereinComponent.findById(mannschaftDO.getVereinId());
 
-        if (dsbMannschaftDO.getNummer() > 1) {
-            mannschaftName = vereinDO.getName() + " " + dsbMannschaftDO.getNummer();
+        if (mannschaftDO.getNummer() > 1) {
+            mannschaftName = vereinDO.getName() + " " + mannschaftDO.getNummer();
         } else {
             mannschaftName = vereinDO.getName();
         }
